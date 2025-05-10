@@ -1,11 +1,10 @@
 // controllers/triviaController.js
-import { Configuration, OpenAIApi } from 'openai';
+import OpenAI from 'openai';
 import Question from '../models/Question.js';
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
 
 export const generateQuestion = async (req, res) => {
   const { category } = req.body;
@@ -22,12 +21,12 @@ export const generateQuestion = async (req, res) => {
   "correctAnswer": "opción3"
 }`;
 
-    const response = await openai.createChatCompletion({
+    const completion = await openai.chat.completions.create({
       model: "gpt-4",
       messages: [{ role: "user", content: prompt }],
     });
 
-    const content = response.data.choices[0].message.content.trim();
+    const content = completion.choices[0].message.content.trim();
     const parsed = JSON.parse(content);
 
     const newQuestion = new Question({
