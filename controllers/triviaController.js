@@ -1,6 +1,6 @@
 // controllers/triviaController.js
-import { Configuration, OpenAIApi } from "openai";
-import Question from "../models/Question.js";
+import { Configuration, OpenAIApi } from 'openai';
+import Question from '../models/Question.js';
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
